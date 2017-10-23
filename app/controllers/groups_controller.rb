@@ -1,5 +1,7 @@
 class GroupsController < ApplicationController
-
+  before_action :authenticate_user! , only: [:new, :create, :edit, :update, :destroy]
+  #我是拦截器，先过我这一关
+  before_action :find_group_and_check_permission , only: [:edit, :update, :destroy]
   def index
     @groups = Group.all
   end
@@ -14,6 +16,7 @@ class GroupsController < ApplicationController
 
   def create
     @group = Group.new(group_params)
+    @group.user = current_user
     if @group.save
       redirect_to groups_path
     else
@@ -22,11 +25,9 @@ class GroupsController < ApplicationController
   end
 
   def edit
-    @group = Group.find(params[:id])
   end
 
   def update
-    @group = Group.find(params[:id])
     if @group.update(group_params)
       redirect_to groups_path, notice: "Update Success"
     else
@@ -41,6 +42,14 @@ class GroupsController < ApplicationController
   end
 
   private
+
+  def find_group_and_check_permission
+    @group = Group.find(params[:id])
+
+    if current_user != @group.user
+      redirect_to root_path, alert: "You have no permission."
+    end
+  end
 
   def group_params
     params.require(:group).permit(:title, :description)
