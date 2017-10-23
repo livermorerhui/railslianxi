@@ -1,0 +1,9 @@
+<h1> 修改话题 </h1>
+
+<%= simple_form_for [@topic] do |f| %>
+
+<%= f.input :title %>
+<%= f.input :description %>
+
+<%= f.submit "Submit" %> <%= link_to("返回", topic_path(@topic)) %>
+<% end %>

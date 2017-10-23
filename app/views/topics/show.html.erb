@@ -1,0 +1,12 @@
+<div class="pull-right"><%= link_to("修改", edit_topic_path(@topic), :class => "btn btn-xs btn-success") %></div>
+<div class="pull-right"><%= link_to("删除", topic_path(@topic), :method => :delete, :class => "btn btn-xs btn-danger", :data => { :confirm => "Are you sure?" })%></div>
+
+<h1> <%= @topic.title %> </h1>
+
+<p>
+  <%= simple_format(@topic.description) %>
+</p>
+
+<div class="text-center">
+  <%= link_to("返回", topics_path, :style => "font-size: 30px; text-decoration:underline;") %>
+</div>

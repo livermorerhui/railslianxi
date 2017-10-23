@@ -1,0 +1,50 @@
+<div class="pull-left">
+  <%= link_to("新建话题", new_topic_path, :class => "btn btn-default" ) %>
+</div>
+
+<br><br>
+
+<table class="table table-boldered table-striped custab" >
+      <thead>
+        <tr>
+            <td>
+             标题
+            </td>
+
+            <td>
+              内容
+            </td>
+
+            <td>
+              发布时间
+            </td>
+            <td></td>
+            <td>投票</td>
+            <td></td>
+        </tr>
+    </thead>
+
+    <% @topics.each do |topic| %>
+    <tr>
+
+        <td>
+            <%= link_to(topic.title, topic_path(topic)) %>
+        </td>
+        <td> <%= topic.description %> </td>
+        <td> <%= topic.created_at %> </td>
+
+        <td>
+          <%= button_to("+1", upvote_topic_path(topic), :method => :post) %>
+        </td>
+
+        <td>
+          <%= pluralize(topic.votes.count, "vote") %>
+        </td>
+
+        <td>
+          <%= button_to("-1", downvote_topic_path(topic), :method => :post) %>
+        </td>
+
+    </tr>
+    <% end %>
+</table>
