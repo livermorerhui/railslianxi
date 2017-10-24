@@ -11,5 +11,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :groups
+  resources :groups do
+    resources :posts
+  end
+
+
 end
