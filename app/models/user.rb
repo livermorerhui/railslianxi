@@ -5,6 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
   has_many :groups
   has_many :posts
+  has_many :jobs
+  has_many :resumes
 
   has_many :group_relationships
   has_many :participated_groups, :through => :group_relationships, :source => :group
@@ -19,6 +21,10 @@ class User < ApplicationRecord
 
   def quit!(group)
     participated_groups.delete(group)
+  end
+
+  def admin?
+    is_admin
   end
 
 end
